@@ -1,16 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { NameChangerComponent } from './name-changer/name-changer.component';
+import { NameOutputComponent } from './name-output/name-output.component';
+import {NameService} from './name.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    NameChangerComponent,
+    NameOutputComponent
   ],
   imports: [
     BrowserModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [NameService],
+  bootstrap: [NameChangerComponent, NameOutputComponent]
 })
 export class AppModule { }
