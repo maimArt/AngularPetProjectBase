@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {ContactService} from '../contact.service';
-import {Contact} from '../../model/contact';
+import {ContactService} from '../services/contact.service';
+import {Contact} from '../../../model/contact';
 
 @Component({
   selector: 'app-contact-creator',

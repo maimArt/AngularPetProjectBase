@@ -1,8 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ContactCreatorComponent} from './contact-creator.component';
-import {ContactService} from '../contact.service';
+import {ContactService} from '../services/contact.service';
 import {BehaviorSubject} from 'rxjs';
-import {Contact} from '../../model/contact';
+import {Contact} from '../../../model/contact';
 import objectContaining = jasmine.objectContaining;
 
 
