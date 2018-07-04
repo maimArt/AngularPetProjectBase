@@ -1,9 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ContactListComponent} from './contact-list.component';
-import {ContactService} from '../contact.service';
+import {ContactService} from '../services/contact.service';
 import {BehaviorSubject} from 'rxjs';
-import {Contact} from '../../model/contact';
+import {Contact} from '../../../model/contact';
 
 class MockedContactService {
   contacts: BehaviorSubject<Contact[]> = new BehaviorSubject([new Contact('Max'), new Contact('Moritz')]);

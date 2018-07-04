@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ContactService} from '../contact.service';
+import {ContactService} from '../services/contact.service';
 import {Observable} from 'rxjs';
-import {Contact} from '../../model/contact';
+import {Contact} from '../../../model/contact';
 
 @Component({
   selector: 'app-contact-list',

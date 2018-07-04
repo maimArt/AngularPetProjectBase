@@ -1,7 +1,7 @@
 import {inject, TestBed} from '@angular/core/testing';
 
 import {ContactService} from './contact.service';
-import {Contact} from '../model/contact';
+import {Contact} from '../../../model/contact';
 
 describe('ContactService', () => {
   beforeEach(() => {
