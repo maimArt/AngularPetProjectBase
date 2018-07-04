@@ -1,19 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { NameChangerComponent } from './name-changer/name-changer.component';
-import { NameOutputComponent } from './name-output/name-output.component';
-import {NameService} from './name.service';
+import {ContactCreatorComponent} from './contact-creator/contact-creator.component';
+import {ContactListComponent} from './contact-list/contact-list.component';
+import {ContactService} from './contact.service';
 
 @NgModule({
   declarations: [
-    NameChangerComponent,
-    NameOutputComponent
+    ContactCreatorComponent,
+    ContactListComponent
   ],
   imports: [
     BrowserModule
   ],
-  providers: [NameService],
-  bootstrap: [NameChangerComponent, NameOutputComponent]
+  providers: [ContactService],
+  bootstrap: [ContactCreatorComponent, ContactListComponent]
 })
 export class AppModule { }
