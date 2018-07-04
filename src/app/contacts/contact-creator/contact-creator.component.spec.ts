@@ -10,7 +10,6 @@ class MockedContactService {
   contacts: BehaviorSubject<Contact[]> = new BehaviorSubject([new Contact('Max'), new Contact('Moritz')]);
 
   addContact() {
-    console.log('AddContact called');
   }
 }
 
