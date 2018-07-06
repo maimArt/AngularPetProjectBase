@@ -1,24 +1,32 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ContactListComponent} from './contact-list.component';
-import {ContactService} from '../services/contact.service';
 import {BehaviorSubject} from 'rxjs';
 import {Contact} from '../../../model/contact';
+import {featureName} from '../store/contacts-store.module';
+import {Store} from '@ngrx/store';
 
-class MockedContactService {
-  contacts: BehaviorSubject<Contact[]> = new BehaviorSubject([new Contact('Max'), new Contact('Moritz')]);
+class MockedContactStore {
+  state: BehaviorSubject<any> = new BehaviorSubject({[featureName]: {contacts: [new Contact('contactNo1'), new Contact('contactNo2')]}});
+
+  pipe(...pipedFunctions) {
+    return this.state.pipe(...pipedFunctions);
+  }
 }
 
 describe('ContactListComponent', () => {
   let component: ContactListComponent;
   let fixture: ComponentFixture<ContactListComponent>;
-  let contactService: Partial<ContactService>;
+  let store: MockedContactStore;
 
   beforeEach(async(() => {
-    contactService = new MockedContactService();
+    store = new MockedContactStore();
     TestBed.configureTestingModule({
       declarations: [ContactListComponent],
-      providers: [{provide: ContactService, useValue: contactService}]
+      providers: [{
+        provide: Store,
+        useValue: store
+      }]
     })
       .compileComponents();
   }));
@@ -26,21 +34,26 @@ describe('ContactListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ContactListComponent);
     component = fixture.componentInstance;
+    component.contacts$.subscribe((state) => console.log(state));
     fixture.detectChanges();
   });
 
-  it('should initially show contacts of service', () => {
+  it('should initially show contacts of store', () => {
     const shownContactNameItems = contactNameItems();
-    expect(shownContactNameItems[0].textContent).toEqual(contactService.contacts.getValue()[0].name);
-    expect(shownContactNameItems[1].textContent).toEqual(contactService.contacts.getValue()[1].name);
+    expect(shownContactNameItems[0].textContent).toEqual(contactState().contacts[0].name);
+    expect(shownContactNameItems[1].textContent).toEqual(contactState().contacts[1].name);
   });
 
-  it('should show new value when service#name changed', () => {
+  it('should show new contact when added to the store', () => {
     const addedContact = new Contact('AddedContact');
-    contactService.contacts.next([...contactService.contacts.getValue(), addedContact]);
+    store.state.next({[featureName]: {contacts: [...contactState().contacts, addedContact]}});
     fixture.detectChanges();
     expect(contactNameItems()[2].textContent).toEqual(addedContact.name);
   });
+
+  const contactState = () => {
+    return store.state.getValue()[featureName];
+  };
 
   const contactNameItems = function (): NodeList {
     return fixture.nativeElement.querySelectorAll('.contactName');

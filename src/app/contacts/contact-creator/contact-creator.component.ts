@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {ContactService} from '../services/contact.service';
 import {Contact} from '../../../model/contact';
+import {Store} from '@ngrx/store';
+import {AddContactAction} from '../store/contacts.actions';
 
 @Component({
   selector: 'app-contact-creator',
@@ -12,14 +13,14 @@ export class ContactCreatorComponent {
   @ViewChild('nameInput')
   inputField: ElementRef<HTMLInputElement>;
 
-  constructor(private nameService: ContactService) {
+  constructor(public store: Store<any>) {
 
   }
 
   createNewContact() {
     const nameOfNewContact = this.inputField.nativeElement.value;
     if (nameOfNewContact != null && nameOfNewContact.length > 0) {
-      this.nameService.addContact(new Contact(nameOfNewContact));
+      this.store.dispatch(new AddContactAction(new Contact(nameOfNewContact)));
       this.clearInputField();
     }
   }

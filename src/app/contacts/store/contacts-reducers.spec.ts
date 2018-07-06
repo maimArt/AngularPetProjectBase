@@ -1,5 +1,4 @@
-import {ContactState} from './contacts-store.module';
-import {reduceContactState} from './contacts-reducers';
+import {ContactState, reduceContactState} from './contacts-reducers';
 import {AddContactAction} from './contacts.actions';
 import {Contact} from '../../../model/contact';
 

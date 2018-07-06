@@ -1,11 +1,6 @@
 import {InjectionToken, NgModule} from '@angular/core';
-import {Contact} from '../../../model/contact';
 import {ActionReducer, StoreModule} from '@ngrx/store';
-import {reduceContactState} from './contacts-reducers';
-
-export class ContactState {
-  contacts: Contact[] = [];
-}
+import {ContactState, reduceContactState} from './contacts-reducers';
 
 export const featureName = 'Contacts';
 

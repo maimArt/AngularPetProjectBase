@@ -2,7 +2,7 @@
   <label>Contacts: </label>
   <br>
   <ul>
-    <li *ngFor="let contact of contacts | async">
+    <li *ngFor="let contact of contacts$ | async">
       <label class="contactName">{{contact.name}}</label>
     </li>
   </ul>

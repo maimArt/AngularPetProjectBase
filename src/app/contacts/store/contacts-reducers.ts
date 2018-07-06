@@ -1,5 +1,9 @@
 import {ContactAction, ContactActionTypes} from './contacts.actions';
-import {ContactState} from './contacts-store.module';
+import {Contact} from '../../../model/contact';
+
+export class ContactState {
+  contacts: Contact[] = [];
+}
 
 export const reduceContactState = (state: ContactState = new ContactState(), action: ContactAction) => {
   switch (action.type) {

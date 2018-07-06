@@ -13,7 +13,7 @@ describe('Name view', () => {
     expect(page.contactCreator.valueOfContactCreator()).toBe('');
   });
 
-  it('should initially display an empty list of contacts', function () {
+  it('should initially display an empty list of contacts$', function () {
     expect(page.contactList.isShown()).toBe(true);
     expect(page.contactList.shownContactNames().then(contactNames => contactNames.length)).toBe(0);
   });

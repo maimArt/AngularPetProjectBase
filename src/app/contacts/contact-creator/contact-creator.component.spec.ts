@@ -1,15 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ContactCreatorComponent} from './contact-creator.component';
-import {ContactService} from '../services/contact.service';
-import {BehaviorSubject} from 'rxjs';
-import {Contact} from '../../../model/contact';
+import {ContactActionTypes} from '../store/contacts.actions';
+import {Store} from '@ngrx/store';
 import objectContaining = jasmine.objectContaining;
 
 
-class MockedContactService {
-  contacts: BehaviorSubject<Contact[]> = new BehaviorSubject([new Contact('Max'), new Contact('Moritz')]);
-
-  addContact() {
+class MockedStore {
+  dispatch() {
   }
 }
 
@@ -17,17 +14,17 @@ describe('ContactCreatorComponent', () => {
   let fixture: ComponentFixture<ContactCreatorComponent>;
   let component: ContactCreatorComponent;
   let nameInput: HTMLInputElement;
-  let contactService: Partial<ContactService>;
+  let store: MockedStore;
 
   beforeEach(async(() => {
-    contactService = new MockedContactService();
+    store = new MockedStore();
     TestBed.configureTestingModule({
       declarations: [
         ContactCreatorComponent
       ],
       providers: [{
-        provide: ContactService,
-        useValue: contactService
+        provide: Store,
+        useValue: store
       }]
     }).compileComponents();
     fixture = TestBed.createComponent(ContactCreatorComponent);
@@ -38,6 +35,7 @@ describe('ContactCreatorComponent', () => {
     component = fixture.componentInstance;
     nameInput = fixture.nativeElement.querySelector('#nameInput');
     fixture.detectChanges();
+    spyOn(store, 'dispatch');
   });
 
   it('should initially contain an empty textfield', function () {
@@ -45,14 +43,16 @@ describe('ContactCreatorComponent', () => {
   });
 
   it('should commit the created contact to the contact service when pressing ENTER', function () {
-    spyOn(contactService, 'addContact');
     const nameOfNewContact = 'Horst';
     nameInput.value = nameOfNewContact;
 
     nameInput.dispatchEvent(new KeyboardEvent('keyup', {key: 'enter'}));
     fixture.detectChanges();
 
-    expect(contactService.addContact).toHaveBeenCalledWith(objectContaining({name: nameOfNewContact}));
+    expect(store.dispatch).toHaveBeenCalledWith(objectContaining({
+      type: ContactActionTypes.ADD_CONTACT,
+      contact: objectContaining({name: nameOfNewContact})
+    }));
   });
 
   it('should clear the textfield after ENTER was pressed', function () {
@@ -65,10 +65,9 @@ describe('ContactCreatorComponent', () => {
   });
 
   it('should not create a contact when textfield is empty and ENTER was pressed', function () {
-    spyOn(contactService, 'addContact');
     nameInput.dispatchEvent(new KeyboardEvent('keyup', {key: 'enter'}));
     fixture.detectChanges();
 
-    expect(contactService.addContact).not.toHaveBeenCalled();
+    expect(store.dispatch).not.toHaveBeenCalled();
   });
 });
