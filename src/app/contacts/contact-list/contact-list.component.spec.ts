@@ -34,7 +34,6 @@ describe('ContactListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ContactListComponent);
     component = fixture.componentInstance;
-    component.contacts$.subscribe((state) => console.log(state));
     fixture.detectChanges();
   });
 
